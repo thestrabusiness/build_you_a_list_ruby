@@ -19,6 +19,30 @@ describe List do
     end
   end
 
+  describe "#==" do
+    it "is equal to a different list with the same values" do
+      list1 = List.empty.prepend(3).prepend(2).prepend(1)
+      list2 = List.empty.prepend(3).prepend(2).prepend(1)
+
+      expect(list1).to eq list2
+    end
+  end
+
+  describe "#hash" do
+
+    # Otherwise two lists that are the "same" will get treated as different
+    # when used as hash keys.
+    # See https://www.belighted.com/blog/overriding-equals-equals for more
+    # details
+
+    it "hashes the same as a different list with the same values" do
+      list1 = List.empty.prepend(3).prepend(2).prepend(1)
+      list2 = List.empty.prepend(3).prepend(2).prepend(1)
+
+      expect(list1.hash).to eq list2.hash
+    end
+  end
+
   describe "#length" do
     it "is zero when the list is empty" do
       expect(List.empty.length).to eq 0
@@ -66,6 +90,15 @@ describe List do
       composed = list.map { |n| (n * 2).to_string }
 
       expect(chained).to eq composed
+    end
+
+    it "transforms all the items in a list" do
+      list = List.empty.prepend(3).prepend(2).prepend(1)
+
+      increments = list.map { |n| n + 1 }
+
+      hardcoded_increments = List.empty.prepend(4).prepend(3).prepend(2)
+      expect(increments).to eq hardcoded_increments
     end
   end
 

@@ -8,7 +8,6 @@ class List
   end
 
   def map(&block)
-    self
   end
 
   def reduce(initial, &block)
@@ -18,9 +17,5 @@ class List
   end
 
   def length
-  end
-
-  def inspect
-    "[]"
   end
 end
