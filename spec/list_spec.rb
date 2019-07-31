@@ -86,8 +86,8 @@ describe List do
     it "treats map chains just like a single map with a composed function" do
       list = List.empty.prepend(3).prepend(2).prepend(1)
 
-      chained = list.map { |n| n * 2 }.map { |n| n.to_string }
-      composed = list.map { |n| (n * 2).to_string }
+      chained = list.map { |n| n * 2 }.map { |n| n.to_s }
+      composed = list.map { |n| (n * 2).to_s }
 
       expect(chained).to eq composed
     end
@@ -120,7 +120,7 @@ describe List do
     end
 
     it "check if all items are even" do
-      list = List.empty.prepend(3).prepend(2).prepend(1)
+      list = List.empty.prepend(6).prepend(4).prepend(2)
 
       all_even = list.reduce(true) { |memo, n| memo && n.even? }
 
