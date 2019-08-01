@@ -31,7 +31,7 @@ class List
   end
 
   def length
-    _length(tail)
+    _reduce(0, self, &lambda { |memo, _| memo + 1 })
   end
 
   def ==(list)
@@ -43,7 +43,7 @@ class List
   end
 
   def reverse
-    _reverse(self)
+    _reduce(List.empty, self, &lambda { |memo, n| memo.prepend n })
   end
 
   protected
@@ -53,15 +53,6 @@ class List
   end
 
   private
-
-  def _length(remaining_tail, count = 0)
-    if remaining_tail.nil?
-      count
-    else
-      count += 1
-      _length(remaining_tail.tail, count)
-    end
-  end
 
   def _inspect(current_head, remaining_tail, list_values = '')
     list_values << "#{current_head}"
@@ -80,15 +71,6 @@ class List
       new_head = block.call current_list.head
       list = new_list.prepend(new_head)
       _map(current_list.tail, list, &block)
-    end
-  end
-
-  def _reverse(current_list, new_list = List.empty)
-    if current_list.empty?
-      new_list
-    else
-      list = new_list.prepend(current_list.head)
-      _reverse(current_list.tail, list)
     end
   end
 
