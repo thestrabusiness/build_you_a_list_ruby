@@ -7,15 +7,11 @@ class List
   end
 
   def self.empty
-    new(nil, nil)
+    EmptyList.new
   end
 
   def inspect
-    if empty?
-      '[]'
-    else
-      _inspect(head, tail)
-    end
+    _inspect(head, tail)
   end
 
   def prepend(head)
@@ -23,11 +19,7 @@ class List
   end
 
   def map(&block)
-    if empty?
-      self
-    else
-      _map(self, List.empty, &block)
-    end
+    _map(self, List.empty, &block)
   end
 
   def reduce(initial, &block)
@@ -39,11 +31,7 @@ class List
   end
 
   def length
-    if empty?
-      0
-    else
-      _length(tail)
-    end
+    _length(tail)
   end
 
   def ==(list)
@@ -55,11 +43,7 @@ class List
   end
 
   def reverse
-    if tail.empty?
-      self
-    else
-      _reverse(self)
-    end
+    _reverse(self)
   end
 
   protected
@@ -115,5 +99,52 @@ class List
       new_value = block.call(current_value, current_list.head)
       _reduce(new_value, current_list.tail, &block)
     end
+  end
+end
+
+
+class EmptyList
+  def prepend(value)
+    List.new(value, self)
+  end
+
+  def empty?
+    true
+  end
+
+  def inspect
+    '[]'
+  end
+
+  def map
+    self
+  end
+
+  def length
+    0
+  end
+
+  def reverse
+    self
+  end
+
+  def first
+    nil
+  end
+
+  def reduce(value)
+    value
+  end
+
+  def head
+    nil
+  end
+
+  def tail
+    nil
+  end
+
+  def ==(other_list)
+    other_list.empty?
   end
 end
